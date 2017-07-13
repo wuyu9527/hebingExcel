@@ -114,10 +114,7 @@ public class DownloadWin extends JFrame implements ActionListener {
             if (file.exists()) {
                 try {
                     ArrayList<AllianceFirst> allianceFirsts = excelReader.readXls(file);
-                    System.out.println("地址数量:" + allianceFirsts.size());
-                    for (AllianceFirst allianceFirst : allianceFirsts) {
-                        System.out.println(allianceFirst.toString());
-                    }
+
                 } catch (IOException e1) {
                     e1.printStackTrace();
                     JOptionPane.showMessageDialog(getContentPane(), "文件读取错误", "提示信息", JOptionPane.INFORMATION_MESSAGE);
