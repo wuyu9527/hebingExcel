@@ -7,12 +7,14 @@ import java.io.*;
 /**
  * Created by android on 2017/7/13.
  */
-public class DownloadWin extends JFrame {
+public class DownloadWin extends JFrame implements ActionListener {
 
     /**   *    */
     private static final long serialVersionUID = -7226361346020458023L;
-    private JTextField httpLine;
+    private JTextField httpLine;//第一个地址
+    private String firstPath = "";
     private JTextField savePath;
+    private String secondPath = "";
     private JButton btnDownload;
     private JButton first;//列表1
     private JButton second;//列表2
@@ -39,9 +41,9 @@ public class DownloadWin extends JFrame {
         Box boxV3 = Box.createHorizontalBox();
         Box boxV4 = Box.createHorizontalBox();
         Box boxV5 = Box.createHorizontalBox();
-        lineLabel = new JLabel("访问地址：");
+        lineLabel = new JLabel("一地址：");
         httpLine = new JTextField();
-        saveLabel = new JLabel("保存路径：");
+        saveLabel = new JLabel("二地址：");
         savePath = new JTextField();
         btnDownload = new JButton("下载");
         first = new JButton("第一个列表");
@@ -58,8 +60,25 @@ public class DownloadWin extends JFrame {
                 String s = null;
                 if (log_open.getFile() != null) {
                     File file = new File(log_open.getDirectory(), log_open.getFile());
-                    if (file.exists()){
+                    if (file.exists()) {
+                        httpLine.setText(file.getAbsolutePath());
                         System.out.println(file.getAbsolutePath());
+                        firstPath = file.getAbsolutePath();
+                    }
+                }
+            }
+        });
+        second.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                log_open.setVisible(true);
+                String s = null;
+                if (log_open.getFile() != null) {
+                    File file = new File(log_open.getDirectory(), log_open.getFile());
+                    if (file.exists()) {
+                        savePath.setText(file.getAbsolutePath());
+                        System.out.println(file.getAbsolutePath());
+                        secondPath = file.getAbsolutePath();
                     }
                 }
             }
@@ -82,5 +101,10 @@ public class DownloadWin extends JFrame {
         Box.createVerticalStrut(15);
         baseBox.add(boxV5);
         add(baseBox);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }
