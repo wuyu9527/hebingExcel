@@ -28,6 +28,9 @@ public class AllianceFirst {
     private String couponShortChain;//优惠券短链
     private boolean marketingPlan;//营销计划
 
+    public AllianceFirst() {
+    }
+
     public AllianceFirst(String id, String name, String urlImage, String urlGoodsInfo, String shopName, String goodsPirce, String saleNumMonth, String commissionPercentage, String commissionPirce, String WANGWANG, String taobaoShortChain, String taobaoShortChainLong, String taobaoPassword, int couponTotal, int couponRemaining, String couponDenomination, String couponStartTime, String couponEndTime, String urlCoupon, String couponPassword, String couponShortChain, boolean marketingPlan) {
         this.id = id;
         this.name = name;
@@ -227,5 +230,33 @@ public class AllianceFirst {
 
     public void setMarketingPlan(boolean marketingPlan) {
         this.marketingPlan = marketingPlan;
+    }
+
+    @Override
+    public String toString() {
+        return "AllianceFirst{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", urlImage='" + urlImage + '\'' +
+                ", urlGoodsInfo='" + urlGoodsInfo + '\'' +
+                ", shopName='" + shopName + '\'' +
+                ", goodsPirce='" + goodsPirce + '\'' +
+                ", saleNumMonth='" + saleNumMonth + '\'' +
+                ", commissionPercentage='" + commissionPercentage + '\'' +
+                ", commissionPirce='" + commissionPirce + '\'' +
+                ", WANGWANG='" + WANGWANG + '\'' +
+                ", TaobaoShortChain='" + TaobaoShortChain + '\'' +
+                ", TaobaoShortChainLong='" + TaobaoShortChainLong + '\'' +
+                ", TaobaoPassword='" + TaobaoPassword + '\'' +
+                ", couponTotal=" + couponTotal +
+                ", couponRemaining=" + couponRemaining +
+                ", couponDenomination='" + couponDenomination + '\'' +
+                ", couponStartTime='" + couponStartTime + '\'' +
+                ", couponEndTime='" + couponEndTime + '\'' +
+                ", urlCoupon='" + urlCoupon + '\'' +
+                ", couponPassword='" + couponPassword + '\'' +
+                ", couponShortChain='" + couponShortChain + '\'' +
+                ", marketingPlan=" + marketingPlan +
+                '}';
     }
 }

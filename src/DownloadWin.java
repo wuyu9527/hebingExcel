@@ -1,8 +1,11 @@
+import Bean.AllianceFirst;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Created by android on 2017/7/13.
@@ -22,7 +25,7 @@ public class DownloadWin extends JFrame implements ActionListener {
     private JLabel lineLabel;
     private JLabel saveLabel;
     private static JLabel infoLabel;
-
+    private ExcelReader excelReader;
 
     public DownloadWin(String title) {
         init();
@@ -45,12 +48,13 @@ public class DownloadWin extends JFrame implements ActionListener {
         httpLine = new JTextField();
         saveLabel = new JLabel("二地址：");
         savePath = new JTextField();
-        btnDownload = new JButton("下载");
+        btnDownload = new JButton("生成回复");
         first = new JButton("第一个列表");
         second = new JButton("第二个列表");
         infoLabel = new JLabel();/**     * 监听器    */
-        DownloadListener listener = new DownloadListener(httpLine, savePath, infoLabel);//将需要改变显示状态的控件传递过去处理
-        btnDownload.addActionListener(listener);
+        excelReader = new ExcelReader();
+        //DownloadListener listener = new DownloadListener(httpLine, savePath, infoLabel);//将需要改变显示状态的控件传递过去处理
+        btnDownload.addActionListener(this);
         //first.addActionListener(new );
         log_open = new FileDialog(this, "打开文件对话框", FileDialog.LOAD);
         first.addActionListener(new ActionListener() {
@@ -105,6 +109,30 @@ public class DownloadWin extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (!firstPath.equals("")) {
+            File file = new File(firstPath);
+            if (file.exists()) {
+                try {
+                    ArrayList<AllianceFirst> allianceFirsts = excelReader.readXls(file);
+                    System.out.println("地址数量:" + allianceFirsts.size());
+                    for (AllianceFirst allianceFirst : allianceFirsts) {
+                        System.out.println(allianceFirst.toString());
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                    JOptionPane.showMessageDialog(getContentPane(), "文件读取错误", "提示信息", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(getContentPane(), "文件不存在,亲!检查下文件地址是否错误", "提示信息", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(getContentPane(), "未选择地址!", "提示信息", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(getContentPane(), "弹出的是消息提示框!", "系统信息", JOptionPane.INFORMATION_MESSAGE);//圆叹号
+//            JOptionPane.showMessageDialog(getContentPane(), "弹出的是警告提示框!", "系统信息", JOptionPane.WARNING_MESSAGE);//三角叹号
+//            JOptionPane.showMessageDialog(getContentPane(), "弹出的是错误提示框!", "系统信息", JOptionPane.ERROR_MESSAGE);//红叉
+//            JOptionPane.showMessageDialog(getContentPane(), "弹出的是询问提示框!", "系统信息", JOptionPane.QUESTION_MESSAGE);//问号
+        }
     }
+
+
 }
