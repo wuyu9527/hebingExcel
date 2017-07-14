@@ -17,6 +17,10 @@ public class DownloadWin extends JFrame implements ActionListener {
     private JTextField httpLine;//第一个地址
     private String firstPath = "";
     private JTextField savePath;
+    private JTextField percentage;//佣金百分比
+    private JTextField nearly;//几天过期
+    private String percentageString = "10";//默认10
+    private String nearlyDayNum = "";//默认10
     private String secondPath = "";
     private JButton btnDownload;
     private JButton first;//列表1
@@ -30,8 +34,8 @@ public class DownloadWin extends JFrame implements ActionListener {
     public DownloadWin(String title) {
         init();
         setTitle(title);
-        setSize(400, 300);
-        setLayout(new GridLayout(2, 1, 0, 0));//为美观考虑，第二行没有使用。
+        setSize(400, 200);
+        setLayout(new GridLayout(1, 1, 0, 0));//为美观考虑，第二行没有使用。
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -39,6 +43,7 @@ public class DownloadWin extends JFrame implements ActionListener {
 
     private void init() {
         Box baseBox = Box.createVerticalBox();
+        Box boxV0 = Box.createVerticalBox();
         Box boxV1 = Box.createHorizontalBox();
         Box boxV2 = Box.createHorizontalBox();
         Box boxV3 = Box.createHorizontalBox();
@@ -48,6 +53,12 @@ public class DownloadWin extends JFrame implements ActionListener {
         httpLine = new JTextField();
         saveLabel = new JLabel("二地址：");
         savePath = new JTextField();
+        JLabel commissionPercentage = new JLabel("佣金百分比");
+        JLabel nearlyDay = new JLabel("天有效期");
+        nearly = new JTextField();
+        nearly.setText(nearlyDayNum);
+        percentage = new JTextField();
+        percentage.setText(percentageString);
         btnDownload = new JButton("生成回复");
         first = new JButton("第一个列表");
         second = new JButton("第二个列表");
@@ -93,8 +104,12 @@ public class DownloadWin extends JFrame implements ActionListener {
         boxV2.add(saveLabel);
         boxV2.add(savePath);
         boxV2.add(second);
-        boxV3.add(btnDownload);
-        boxV4.add(infoLabel);
+        boxV3.add(commissionPercentage);
+        boxV3.add(percentage);
+        boxV3.add(nearly);
+        boxV3.add(nearlyDay);
+        boxV4.add(btnDownload);
+        boxV5.add(infoLabel);
         baseBox.add(boxV1);
         Box.createVerticalStrut(15);
         baseBox.add(boxV2);
