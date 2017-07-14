@@ -30,6 +30,7 @@ public class DownloadWin extends JFrame implements ActionListener {
     private JLabel saveLabel;
     private static JLabel infoLabel;
     private ExcelReader excelReader;
+    private DoAllianceFirst doAllianceFirst;
 
     public DownloadWin(String title) {
         init();
@@ -66,6 +67,7 @@ public class DownloadWin extends JFrame implements ActionListener {
         excelReader = new ExcelReader();
         //DownloadListener listener = new DownloadListener(httpLine, savePath, infoLabel);//将需要改变显示状态的控件传递过去处理
         btnDownload.addActionListener(this);
+        doAllianceFirst = new DoAllianceFirst();
         //first.addActionListener(new );
         log_open = new FileDialog(this, "打开文件对话框", FileDialog.LOAD);
         first.addActionListener(new ActionListener() {
@@ -122,6 +124,19 @@ public class DownloadWin extends JFrame implements ActionListener {
         add(baseBox);
     }
 
+    /*
+     * 关键词
+     [img]http://img.alicdn.com/bao/uploaded/i4/TB1A_YqSXXXXXanXFXXXXXXXXXX_!!0-item_pic.jpg[/img][结束]\n
+     \n 夏梵尼露肩短袖白色T恤女装夏季2017新款韩范小心机学生清新上衣
+     \n 淘口令 KXhB0ZgSbY2
+     \n 点此链接 https://s.click.taobao.com/auNwpfw
+     \n 价格:59.00
+
+     关键词
+     回复消息
+     *
+     */
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!firstPath.equals("")) {
@@ -129,10 +144,59 @@ public class DownloadWin extends JFrame implements ActionListener {
             if (file.exists()) {
                 try {
                     ArrayList<AllianceFirst> allianceFirsts = excelReader.readXls(file);
-
+                    String num1 = "";
+                    if (percentageString.matches("^([1-9]\\d|\\d)$")) {
+                        num1 = percentageString;
+                    }
+                    String days = "";
+                    if (nearlyDayNum.matches("^([1-9]\\d|\\d)$")) {
+                        days = nearlyDayNum;
+                    }
+                    ArrayList<AllianceFirst> allianceFirsts1 = doAllianceFirst.doAllianceFirst(allianceFirsts, num1, days);
+                    String path = firstPath.substring(0, firstPath.lastIndexOf("\\")) + "\\关键字自动回复.txt";
+                    String path1 = firstPath.substring(0, firstPath.lastIndexOf("\\")) + "\\微信.txt";
+                    File file1 = new File(path);
+                    if (file1.exists()) {
+                        file1.delete();
+                    }
+                    file1.createNewFile();
+                    File file2 = new File(path1);
+                    if (file2.exists()) {
+                        file2.delete();
+                    }
+                    file2.createNewFile();
+                    String content = "";
+                    for (AllianceFirst allianceFirst : allianceFirsts1) {
+                        String string = allianceFirst.getName();
+                        int count = getAllPager(string.length());
+                        String str = "";
+                        for (int i = 1; i < count + 1; i++) {
+                            if (i == count) {
+                                str += string.substring(0, string.length()) + ",";
+                            } else {
+                                str += string.substring(0, onePager * i) + ",";
+                                if (i != 1) {
+                                    int i1 = i - 1;
+                                    str += string.substring(onePager * i1, onePager * i) + ",";
+                                }
+                            }
+                        }
+                        content += str.substring(0,str.length()-1) + "\r\n";
+                        content += "[img]" + allianceFirst.getUrlImage() + "[/img][结束]\n \n" + allianceFirst.getName() + "\n 淘口令 " + allianceFirst.getTaobaoPassword() + "\n 点此链接 " + allianceFirst.getCouponShortChain() + "\n 商品价格 " + allianceFirst.getGoodsPirce();
+                        content += "\r\n";
+                        content += "\r\n";
+                    }
+                    writeTxtFile(content, file1);
+                    String weixin = "*回复以下关键字获取商品*\r\n";
+                    for (AllianceFirst allianceFirst : allianceFirsts1) {
+                        weixin+=allianceFirst.getName().substring(0,onePager)+"\r\n";
+                    }
+                    writeTxtFile(weixin,file2);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                     JOptionPane.showMessageDialog(getContentPane(), "文件读取错误", "提示信息", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
                 }
             } else {
                 JOptionPane.showMessageDialog(getContentPane(), "文件不存在,亲!检查下文件地址是否错误", "提示信息", JOptionPane.INFORMATION_MESSAGE);
@@ -146,5 +210,37 @@ public class DownloadWin extends JFrame implements ActionListener {
         }
     }
 
+    public static boolean writeTxtFile(String content, File fileName) throws Exception {
+        RandomAccessFile mm = null;
+        boolean flag = false;
+        FileOutputStream o = null;
+        try {
+            o = new FileOutputStream(fileName);
+            o.write(content.getBytes("GBK"));
+            o.close();
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (mm != null) {
+                mm.close();
+            }
+        }
+        return flag;
+    }
 
+    /**
+     * @param total 总数
+     * @return 总页数
+     * onePager 一页几个
+     */
+    public int getAllPager(int total) {
+        int pageCount = total / onePager + 1;
+        if (total % onePager == 0) {
+            pageCount = total / onePager;
+        }
+        return pageCount;
+    }
+
+    private int onePager = 7;
 }
