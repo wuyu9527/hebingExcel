@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="hebing:jar">
+    <output-path>$PROJECT_DIR$/../hebing/out/artifacts/hebing_jar</output-path>
+    <root id="archive" name="hebing.jar">
+      <element id="module-output" name="hebing" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../hebing/lib/poi-3.16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../hebing/lib/commons-codec-1.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../hebing/lib/commons-collections4-4.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$KOTLIN_BUNDLED$/lib/kotlin-runtime.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$KOTLIN_BUNDLED$/lib/kotlin-reflect.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

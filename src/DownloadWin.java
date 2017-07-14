@@ -33,8 +33,11 @@ public class DownloadWin extends JFrame implements ActionListener {
     private DoAllianceFirst doAllianceFirst;
 
     public DownloadWin(String title) {
+
         init();
         setTitle(title);
+        ImageIcon test = new ImageIcon("src/icon/is_mine.jpg");//第一句
+        setIconImage(test.getImage()); //第二句
         setSize(400, 200);
         setLayout(new GridLayout(1, 1, 0, 0));//为美观考虑，第二行没有使用。
         setLocationRelativeTo(null);
