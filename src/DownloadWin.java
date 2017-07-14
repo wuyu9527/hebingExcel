@@ -33,7 +33,6 @@ public class DownloadWin extends JFrame implements ActionListener {
     private DoAllianceFirst doAllianceFirst;
 
     public DownloadWin(String title) {
-
         init();
         setTitle(title);
         ImageIcon test = new ImageIcon("src/icon/is_mine.jpg");//第一句
