@@ -11,10 +11,14 @@ public class MainWin {
     private static int onePager = 7;
 
     public static void main(String[] args) {
-        DownloadWin win = new DownloadWin("这是丹专用工具");
+        //DownloadWin win = new DownloadWin("这是丹专用工具");
 
 //        ShortUrlTest shortUrlTest =new ShortUrlTest();
 //        shortUrlTest.getShortUrl("http://item.taobao.com/item.htm?id=550130815589");
+        //
+       
+
+
     }
 
 }
